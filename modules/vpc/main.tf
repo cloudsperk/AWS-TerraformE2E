@@ -10,7 +10,7 @@ resource "aws_vpc" "vpc" {
     prevent_destroy = false
   }
 
-  tags = merge(var.tags, {Name="${var.environment_name}"-vpc})
+  tags = merge(var.tags, {Name="${var.environment_name}-vpc"})
 }
 
 #######################################################################
@@ -19,7 +19,7 @@ resource "aws_vpc" "vpc" {
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 
-  tags = merge(var.tags, {Name="${var.environment_name}"-igw})
+  tags = merge(var.tags, {Name="${var.environment_name}-igw"})
 }
 
 #######################################################################
@@ -53,7 +53,7 @@ resource "aws_subnet" "private_subnet" {
 resource "aws_eip" "eip" {
   depends_on = [ aws_internet_gateway.igw ]
 
-  tags = merge(var.tags, {env="${var.environment_name}"})
+  tags = merge(var.tags, {env="${var.environment_name}-eip"})
 }
 
 #######################################################################
@@ -63,7 +63,7 @@ resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.eip.id
   subnet_id     = values(aws_subnet.public_subnet)[0].id
 
-  tags = merge(var.tags, {env="${var.environment_name}"})
+  tags = merge(var.tags, {env="${var.environment_name}-ngw"})
   # To ensure proper ordering, it is recommended to add an explicit dependency
   # on the Internet Gateway for the VPC.
   depends_on = [aws_internet_gateway.igw]
