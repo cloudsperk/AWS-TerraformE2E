@@ -10,7 +10,7 @@ resource "aws_vpc" "vpc" {
     prevent_destroy = false
   }
 
-  tags = merge(var.tags, {env="${var.environment_name}"})
+  tags = merge(var.tags, {Name="${var.environment_name}"-vpc})
 }
 
 #######################################################################
@@ -19,7 +19,7 @@ resource "aws_vpc" "vpc" {
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 
-  tags = merge(var.tags, {env="${var.environment_name}"})
+  tags = merge(var.tags, {Name="${var.environment_name}"-igw})
 }
 
 #######################################################################
