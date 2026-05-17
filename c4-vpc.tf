@@ -59,7 +59,7 @@ resource "aws_eip" "eip" {
 #######################################################################
 #Resource-06:Nat Gateway
 #######################################################################
-resource "aws_nat_gateway" "aws_nat_gateway" {
+resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.eip.id
   subnet_id     = values(aws_subnet.public_subnet)[0].id
 
@@ -98,7 +98,7 @@ resource "aws_route_table" "private_rt" {
   vpc_id = aws_vpc.vpc.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.ngw.id
+    gateway_id = aws_nat_gateway.ngw.id
   }
 
   tags = merge(var.tags, {env="${var.environment_name}"})
@@ -107,7 +107,7 @@ resource "aws_route_table" "private_rt" {
 #######################################################################
 #Resource-10:Private Route table associate to private subnet
 #######################################################################
-resource "aws_route_table_association" "public_rt_association" {
+resource "aws_route_table_association" "private_rt_association" {
   for_each = aws_subnet.private_subnet
   subnet_id      = each.value.id
   route_table_id = aws_route_table.private_rt.id

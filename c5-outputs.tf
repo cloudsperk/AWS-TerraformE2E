@@ -1,11 +1,15 @@
-output "s3_bucket_name" {
-  value = aws_s3_bucket.demo_bucket.bucket
+output "vpc_id" {
+  value = aws_vpc.vpc.id
 }
 
-output "s3_bucket_id" {
-  value = aws_s3_bucket.demo_bucket.id
+output "public_subnet_ids" {
+  value = [for s in aws_subnet.public_subnet: s.id]
 }
 
-output "s3_bucket_arn" {
-  value = aws_s3_bucket.demo_bucket.arn
+output "private_subnet_ids" {
+  value = [for s in aws_subnet.private_subnet: s.id]
+}
+
+output "public_subnet_map" {
+  value = {for az, subnet in aws_subnet.public_subnet: az=> subnet.id}
 }
