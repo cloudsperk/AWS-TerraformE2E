@@ -43,19 +43,19 @@ variable "cluster_service_ipv4_cidr" {
   default = null
 }
 
-variable "cluster_endpoint_private_access " {
-  description = "Whether to enable private access to EKS control Plane"
-  type = bool
-  default = false
+variable "cluster_endpoint_private_access" {
+  description = "Whether to enable private access to EKS control plane endpoint"
+  type        = bool
+  default     = false
 }
 
-variable "cluster_endpoint_public_access " {
+variable "cluster_endpoint_public_access" {
   description = "Whether to enable public access to EKS control Plane"
   type = bool
   default = true
 }
 
-variable "cluster_endpoint_public_access_cidrs " {
+variable "cluster_endpoint_public_access_cidrs" {
   description = "List of CIDR blocks allowed to access public EKS Endpoint"
   type = list(string)
   default = ["0.0.0.0/0"]
@@ -75,7 +75,7 @@ variable "tags" {
 # -----------------------------------------------------------------------
 # EKS nodegroup configuration
 # -----------------------------------------------------------------------
-variable "node_instance_type" {
+variable "node_instance_types" {
   description = "List of EC2 instance types for the node group"
   type = list(string)
   default = ["t3.medium"]
